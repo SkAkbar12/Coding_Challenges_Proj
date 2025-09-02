@@ -4,13 +4,6 @@ A collection of command-line tools and algorithms implemented in C++.
 
 ---
 
-## **1. Word Count (wc)**
-
-A classic implementation of the Unix `wc` command.
-
-**Algorithm:** Simple state-based counter.
-
-
 ### **Installation**
 ```bash
 # clone the repo (example)
@@ -19,6 +12,16 @@ cd Codong_Challenges_Proj
 
 
 ```
+
+
+## **1. Word Count (wc)**
+
+A classic implementation of the Unix `wc` command.
+
+**Algorithm:** Simple state-based counter.
+
+
+
 
 ### **Usage**
 ```bash
