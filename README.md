@@ -7,8 +7,8 @@ A collection of command-line tools and algorithms implemented in C++.
 ### **Installation**
 ```bash
 # clone the repo (example)
-git clone https://github.com/SkAkbar12/Codong_Challenges_Proj.git
-cd Codong_Challenges_Proj
+git clone https://github.com/SkAkbar12/Coding_Challenges_Proj.git
+cd Coding_Challenges_Proj
 
 
 ```
