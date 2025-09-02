@@ -10,6 +10,16 @@ A classic implementation of the Unix `wc` command.
 
 **Algorithm:** Simple state-based counter.
 
+
+### **Installation**
+```bash
+# clone the repo (example)
+git clone https://github.com/SkAkbar12/Codong_Challenges_Proj.git
+cd Codong_Challenges_Proj
+
+
+```
+
 ### **Usage**
 ```bash
 # Count lines, words, and bytes
@@ -30,6 +40,7 @@ wc -c file.txt
 # Count multiple files
 wc file1.txt file2.txt
 
+```
 
 2. JSON Parser
 
@@ -37,7 +48,14 @@ A lightweight tool to parse and process JSON data.
 
 Algorithm: Recursive descent parser.
 
-Build & Usage
+```bash
+# Compile
+g++ jsonparser.cpp -o jsonparser
+
+# Run
+./jsonparser input.json
+
+```
 
 3. Huffman Compression Tool
 
@@ -45,9 +63,16 @@ A file compression and decompression tool using Huffman coding.
 
 Algorithm: Huffman Coding (priority queue & prefix codes).
 
-Build & Usage
+```bash
+# Compile
+g++ huffman_compressor.cpp -o huffman
+
+# Compress a file
+./huffman compress input.txt
+
+# Decompress a file
+./huffman decompress archive.huff
+
+```
 
 
-Quick Install (Linux / macOS)
-
-Run these commands to clone the repo and prepare a tools/ directory:
