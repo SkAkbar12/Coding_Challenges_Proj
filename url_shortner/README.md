@@ -16,5 +16,5 @@ This is a Node.js-based URL Shortener project. You can create short URLs and man
 
 1. **Clone the repository**
 ```bash
-git clone 
+git clone https://github.com/SkAkbar12/Coding_Challenges_Proj.git
 cd Coding_Challenges_Proj/url_shortner
