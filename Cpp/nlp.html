@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence to GIF Converter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #ffd166;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin: 25px 0 15px;
+            color: #06d6a0;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #06d6a0;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1.1rem;
+            resize: vertical;
+        }
+        
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .option {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        select, button {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            background: #06d6a0;
+            color: #0f2027;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        select {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid #06d6a0;
+        }
+        
+        button {
+            background: #118ab2;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        button:hover {
+            background: #06d6a0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .result-section {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .media-container {
+            width: 100%;
+            min-height: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 2px dashed #06d6a0;
+        }
+        
+        .media-placeholder {
+            text-align: center;
+            padding: 30px;
+            color: #8ecae6;
+        }
+        
+        .media-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #06d6a0;
+        }
+        
+        .media-output {
+            width: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .media-output img, .media-output video {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .download-btn {
+            margin-top: 20px;
+            background: #ef476f;
+        }
+        
+        .examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .example {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .example:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .example h3 {
+            color: #ffd166;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #8ecae6;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-film"></i> Sentence to GIF Converter</h1>
+            <p>Transform your sentences into expressive GIFs, short videos, or images</p>
+        </header>
+        
+        <div class="input-section">
+            <h2>Enter your sentence</h2>
+            <textarea id="sentence-input" placeholder="Type a sentence here... (e.g., 'Happy birthday celebration', 'Excited jumping for joy', 'Sad rainy day')"></textarea>
+            
+            <div class="options">
+                <div class="option">
+                    <h3>Output Format</h3>
+                    <select id="format-select">
+                        <option value="gif">Animated GIF (2-3 sec)</option>
+                        <option value="video">Short Video (3-4 sec)</option>
+                        <option value="image">Static Image</option>
+                    </select>
+                </div>
+                
+                <div class="option">
+                    <h3>Visual Style</h3>
+                    <select id="style-select">
+                        <option value="realistic">Realistic</option>
+                        <option value="cartoon">Cartoon</option>
+                        <option value="abstract">Abstract</option>
+                        <option value="minimal">Minimalistic</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button id="generate-btn">
+                <i class="fas fa-magic"></i> Generate Visual
+            </button>
+        </div>
+        
+        <div class="result-section">
+            <h2>Your Generated Media</h2>
+            
+            <div class="media-container">
+                <div class="media-placeholder" id="media-placeholder">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Your generated media will appear here</p>
+                </div>
+                
+                <div class="media-output" id="media-output">
+                    <!-- Generated media will be inserted here -->
+                </div>
+            </div>
+            
+            <button class="download-btn" id="download-btn" style="display: none;">
+                <i class="fas fa-download"></i> Download
+            </button>
+        </div>
+        
+        <div class="examples-section">
+            <h2>Example Sentences</h2>
+            <div class="examples">
+                <div class="example" data-sentence="Happy birthday celebration with cake and balloons">
+                    <h3>Celebration</h3>
+                    <p>Happy birthday celebration with cake and balloons</p>
+                </div>
+                
+                <div class="example" data-sentence="Person jumping excitedly on a beach at sunset">
+                    <h3>Excitement</h3>
+                    <p>Person jumping excitedly on a beach at sunset</p>
+                </div>
+                
+                <div class="example" data-sentence="Rainy day with lonely person under an umbrella">
+                    <h3>Sadness</h3>
+                    <p>Rainy day with lonely person under an umbrella</p>
+                </div>
+                
+                <div class="example" data-sentence="Couple dancing under starry night sky">
+                    <h3>Romance</h3>
+                    <p>Couple dancing under starry night sky</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Note: This is a frontend demonstration. In a real application, this would connect to a backend API for actual media generation.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sentenceInput = document.getElementById('sentence-input');
+            const formatSelect = document.getElementById('format-select');
+            const styleSelect = document.getElementById('style-select');
+            const generateBtn = document.getElementById('generate-btn');
+            const mediaPlaceholder = document.getElementById('media-placeholder');
+            const mediaOutput = document.getElementById('media-output');
+            const downloadBtn = document.getElementById('download-btn');
+            const examples = document.querySelectorAll('.example');
+            
+            // Example media for demonstration
+            const exampleMedia = {
+                gif: {
+                    realistic: "https://media.giphy.com/media/LpxgGxUzzSI9a/giphy.gif",
+                    cartoon: "https://media.giphy.com/media/j3gsT2RsH9K0w/giphy.gif",
+                    abstract: "https://media.giphy.com/media/3o7TKsQ8UQ4l4LhGz6/giphy.gif",
+                    minimal: "https://media.giphy.com/media/3o7TKsQ8UQ4l4LhGz6/giphy.gif"
+                },
+                video: {
+                    realistic: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                    cartoon: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+                    abstract: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+                    minimal: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
+                },
+                image: {
+                    realistic: "https://images.unsplash.com/photo-1579546929662-711aa81148cf",
+                    cartoon: "https://images.unsplash.com/photo-1579546929662-711aa81148cf",
+                    abstract: "https://images.unsplash.com/photo-1579546929662-711aa81148cf",
+                    minimal: "https://images.unsplash.com/photo-1579546929662-711aa81148cf"
+                }
+            };
+            
+            // Add click event to examples
+            examples.forEach(example => {
+                example.addEventListener('click', function() {
+                    sentenceInput.value = this.getAttribute('data-sentence');
+                });
+            });
+            
+            // Generate media function
+            generateBtn.addEventListener('click', function() {
+                const sentence = sentenceInput.value.trim();
+                const format = formatSelect.value;
+                const style = styleSelect.value;
+                
+                if (!sentence) {
+                    alert('Please enter a sentence first!');
+                    return;
+                }
+                
+                // Show loading state
+                generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+                generateBtn.disabled = true;
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    // Hide placeholder and show output
+                    mediaPlaceholder.style.display = 'none';
+                    mediaOutput.style.display = 'flex';
+                    
+                    // Clear previous output
+                    mediaOutput.innerHTML = '';
+                    
+                    // Create media element based on format
+                    let mediaElement;
+                    if (format === 'gif' || format === 'image') {
+                        mediaElement = document.createElement('img');
+                        mediaElement.src = exampleMedia[format][style] + '?t=' + new Date().getTime();
+                        mediaElement.alt = sentence;
+                    } else if (format === 'video') {
+                        mediaElement = document.createElement('video');
+                        mediaElement.src = exampleMedia[format][style] + '?t=' + new Date().getTime();
+                        mediaElement.controls = true;
+                        mediaElement.autoplay = true;
+                        mediaElement.loop = true;
+                    }
+                    
+                    mediaOutput.appendChild(mediaElement);
+                    
+                    // Show download button
+                    downloadBtn.style.display = 'block';
+                    
+                    // Reset button state
+                    generateBtn.innerHTML = '<i class="fas fa-magic"></i> Generate Visual';
+                    generateBtn.disabled = false;
+                    
+                    // Add download functionality
+                    downloadBtn.onclick = function() {
+                        alert('In a real application, this would download your generated media. For now, you can right-click and save the image/video.');
+                    };
+                }, 2000); // Simulate 2 second processing time
+            });
+        });
+    </script>
+</body>
+</html>
